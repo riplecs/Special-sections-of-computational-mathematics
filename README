@@ -1,0 +1,19 @@
+I developed functions for working with m-bit integers numbers. The library supports numbers up to 2048 bits long. The following operations were be implemented:
+
+1) adding numbers;
+2) subtraction of numbers;
+3) multiplication of numbers, raising numbers to the square;
+4) division of numbers, finding the remainder of the division;
+5) raising the number to a multi-digit degree;
+6) conversion (translation) of a number into a character string and inverse conversion character string in number;
+The class has hexadecimal support.
+
+There also were realised: 
+1) calculation of GCD and LCM of two numbers;
+2) adding numbers modulo;
+3) subtraction of numbers modulo;
+4) multiplication of numbers and subtraction of numbers to the square modulo;
+5) raising the number to multi-digit power d modulo n.
+
+
+Modular arithmetic was implemented on the basis of Barrett's reduction, exaltation to the extent - based on the Horner scheme.
