@@ -263,8 +263,8 @@ def LongShiftDigitsToLow(n, amount):
     return n
 
 def LongShiftBitsToHigh(n, amount):  
+    if amount%32== 0: return LongShiftDigitsToHigh(n, amount // 32)
     b = 32-amount%32
-    if 32-b == 0: return LongShiftDigitsToHigh(n, amount // 32)
     k = 1 if n[len(n)-1] >> b !=0 else 0
     res = [0] * (len(n) + k + amount // 32)
     if k == 1:
@@ -278,9 +278,9 @@ def LongShiftBitsToHigh(n, amount):
     return res
   
 def LongShiftBitsToLow(n, amount):
-    b = 32- amount % 32
     if amount // 32 >= len(n): return from_hex('0')
-    if 32-b == 0: return LongShiftDigitsToLow(n, amount // 32)
+    if amount % 32 == 0: return LongShiftDigitsToLow(n, amount // 32)
+    b = 32- amount % 32
     k=0 if n[len(n) - 1] >> 32-b != 0 else 1
     res = [0] * (len(n) - k - amount // 32)
     if k== 0:
