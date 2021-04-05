@@ -1,4 +1,4 @@
-I developed functions for working with m-bit integers numbers. The library supports numbers up to 2048 bits long. The following operations were be implemented:
+The following operations were be implemented:
 
 1) adding numbers;
 2) subtraction of numbers;
