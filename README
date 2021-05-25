@@ -1,4 +1,4 @@
-LABA1 : Implementation of operations in finite fields of characteristic 2
+LABA1 
 
 The following operations were be implemented:
 
@@ -22,4 +22,13 @@ Modular arithmetic was implemented on the basis of Barrett's reduction, exaltati
  
 There were also compared time of operations performed using algorithms and Python tools.
 
-LABA2 
+LABA2 : Implementation of operations in finite fields of characteristic 2
+
+I implemented a Galois field of characteristic 2 of degree m in the polynomial amd normal basis coperations:
+1) adding elements;
+2) multiplication of elements;
+3) calculation of the trace element;
+4) elevation of the field element to the square;
+5) elevation of the field element to an arbitrary degree (not more than 2^m-1, where m is dimension of expansion);
+6) finding the inverse element by multiplication;
+7) conversion (translation) of a field element into an m-bit (string image) and vice versa, where m is the dimension of the extension;
