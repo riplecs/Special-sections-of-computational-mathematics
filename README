@@ -1,4 +1,4 @@
-LABA1
+LABA1 : Implementation of operations in finite fields of characteristic 2
 
 The following operations were be implemented:
 
@@ -21,3 +21,5 @@ There also were realised:
 Modular arithmetic was implemented on the basis of Barrett's reduction, exaltation to the extent - based on the Horner scheme.
  
 There were also compared time of operations performed using algorithms and Python tools.
+
+LABA2 
