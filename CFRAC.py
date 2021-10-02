@@ -74,10 +74,12 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
                     d1 = np.gcd(int(X + Y), n)
                     if 1 < d1 < n:
                         d = d1
+                        break
                     else:
                         d2 = np.gcd(int(X - Y), n)
                         if 1 < d2 < n:
                             d = d2
+                            break
         if d == 0:
             it+=1
             u = u1
@@ -86,6 +88,7 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
             continue
         else:
             print(TABLE)
+            print(f'\nν_{j} = {w[j]}, ν_{i} = {w[i]}')
             print('\nФактор-база: ', Beta)
             return d
             break
