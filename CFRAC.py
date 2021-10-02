@@ -34,21 +34,28 @@ def counting_b2(m, n):
         return mod - n
     
     
-def CFRAC_Brillhart_Morrison(n, v = 1):
-    d = 0
-    Beta = [-1, 2]
+def update_factor_base(base, n, num, vectors):
+    base_new = base.copy()
+    factorize = factorization_small_n(num)
+    for f in set(factorize):
+        if f not in base_new and f < 100:
+            if (n%f)**int(((f-1)/2))%f == 1:
+                    base_new.append(f)
+    if base_new != base:
+        for i in range(len(vectors)):
+            factorize_i = factorization_small_n(TABLE[f'{i}'][2])
+            vectors[i] = [factorize_i.count(k) for k in base_new]
+    vectors.append([factorize.count(i) for i in base_new])
+    return sorted(base_new), vectors
+  
+    
+def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
     alpha = np.sqrt(n)
     a = int(alpha)
     u = a
     b = counting_b2(a, n)
     TABLE['0'] = [a, a, b]
-    factorize = factorization_small_n(b)
-    for f in set(factorize):
-        if 2 < f < 100:
-            if (n%f)**((f-1)/2)%f == 1:
-                Beta.append(f)
-    Beta = sorted(Beta)
-    w = [[factorize.count(i) for i in Beta]]
+    Beta, w = update_factor_base(Beta, n, b, [])
     it = 1
     while True:
         v1 = (n - u**2)/v
@@ -58,19 +65,7 @@ def CFRAC_Brillhart_Morrison(n, v = 1):
         b = (a1*TABLE[f'{it-1}'][1] + TABLE[f'{it-2}'][1])%n
         b2= counting_b2(b, n)
         TABLE[f'{it}'] = [a1, b, b2]
-        factorize = factorization_small_n(b2)
-        Beta_n = Beta.copy()
-        for f in set(factorize):
-            if f not in Beta and f < 100:
-                if (n%f)**int(((f-1)/2))%f == 1:
-                    Beta_n.append(f)
-        Beta_n = sorted(Beta_n)
-        if Beta_n != Beta:
-            for i in range(len(w)):
-                factorize_i = factorization_small_n(TABLE[f'{i}'][2])
-                w[i] = [factorize_i.count(k) for k in Beta_n]
-        w.append([factorize.count(i) for i in Beta_n])
-        Beta = Beta_n
+        Beta, w = update_factor_base(Beta, n, b2, w)
         for i in range(len(w)):
             for j in range(i):
                 if [(x + y)%2 for x, y in zip(w[i], w[j])] == len(w[i])*[0]:
