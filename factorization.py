@@ -68,6 +68,7 @@ def twoKmodification(x0, n, func):
 def f(x, n):
     return (x**2 + 1)%n
 
+
 def Ferma(n):
     x = int(np.sqrt(n))
     y = 0
@@ -83,8 +84,8 @@ def Ferma(n):
         r = x**2 - y**2 - n
         it+=1
     print(f'{it}) r = ', r, f' => p = x + y = {x + y}, q = x - y = {x - y}')
-Ferma(200819)
-
+    
+    
 print('Examples: ')
 print("\nPollard's Ro-method of factorization: ")
 classicPollard(1, 8051, f)
