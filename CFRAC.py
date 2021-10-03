@@ -48,7 +48,22 @@ def update_factor_base(base, n, num, vectors):
     vectors.append([factorize.count(i) for i in base_new])
     return sorted(base_new), vectors
   
-    
+def combination(List):
+    result = []
+    for l in range(1, len(List)+1):
+        for i in itertools.combinations(List, l):
+            if List[-1] in i:
+                result.append(list(i))
+    return result
+
+
+def sum_vectors(vectors):
+    result = []
+    for i in range(len(vectors[0])):
+        result.append(sum(vectors[j][i] for j in range(len(vectors)))%2)
+    return result
+  
+  
 def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
     alpha = np.sqrt(n)
     a = int(alpha)
@@ -66,12 +81,15 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
         b2= counting_b2(b, n)
         TABLE[f'{it}'] = [a1, b, b2]
         Beta, w = update_factor_base(Beta, n, b2, w)
-        for i in range(len(w)):
-            for j in range(i):
-                if [(x + y)%2 for x, y in zip(w[i], w[j])] == len(w[i])*[0]:
-                    X = TABLE[f'{i}'][1]*TABLE[f'{j}'][1]%n
-                    Y = np.sqrt(TABLE[f'{i}'][2]*TABLE[f'{j}'][2])
-                    d1 = np.gcd(int(X + Y), n)
+        for comb in combination(w):
+            if sum_vectors(comb) == (len(Beta))*[0]:
+                X, Y = 1, 1   
+                for vec in comb[:-1]:
+                    X *= TABLE[f'{w.index(vec)}'][1]%n
+                    Y *= TABLE[f'{w.index(vec)}'][2]
+                X *= TABLE[f'{it}'][1]%n
+                Y = np.sqrt(Y*TABLE[f'{it}'][2])
+                d1 = np.gcd(int(X + Y), n)
                     if 1 < d1 < n:
                         d = d1
                         break
@@ -88,7 +106,9 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
             continue
         else:
             print(TABLE)
-            print(f'\nν_{j} = {w[j]}, ν_{i} = {w[i]}')
+            for vec in comb[:-1]:
+                print(f'\nν_{w.index(vec)} = {w[w.index(vec)]}')
+            print(f'\nν_{it} = {w[it]}')
             print('\nФактор-база: ', Beta)
             return d
             break
