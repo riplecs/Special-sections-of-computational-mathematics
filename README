@@ -1,6 +1,6 @@
 LABA1 : long arithmetic
 
-The following operations were be implemented:
+The following operations were implemented:
 
 1) adding numbers;
 2) subtraction of numbers;
@@ -10,21 +10,18 @@ The following operations were be implemented:
 6) conversion (translation) of a number into a character string and inverse conversion character string in number;
 The class has hexadecimal support.
 
-There also were realised: 
+There also were released: 
 1) calculation of GCD and LCM of two numbers;
 2) adding numbers modulo;
 3) subtraction of numbers modulo;
 4) multiplication of numbers and subtraction of numbers to the square modulo;
 5) raising the number to multi-digit power d modulo n.
 
-
-Modular arithmetic was implemented on the basis of Barrett's reduction, exaltation to the extent - based on the Horner scheme.
- 
-There were also compared time of operations performed using algorithms and Python tools.
+Modular arithmetic was implemented on the basis of Barrett's reduction, exaltation to the degree - based on the Horner scheme.
 
 LABA2 : Implementation of operations in finite fields of characteristic 2
 
-I implemented a Galois field of characteristic 2 of degree m in the polynomial amd normal basis coperations:
+I implemented a Galois field of characteristic 2 of degree m in the polynomial and normal basises:
 1) adding elements;
 2) multiplication of elements;
 3) calculation of the trace element;
