@@ -7,6 +7,7 @@ Created on Fri Oct  1 17:51:36 2021
 
 import numpy as np
 import pandas as pd
+import itertools
 
 
 TABLE = pd.DataFrame({'S': ['a', 'bmodn', 'b^2modn'], 
@@ -48,6 +49,7 @@ def update_factor_base(base, n, num, vectors):
     vectors.append([factorize.count(i) for i in base_new])
     return sorted(base_new), vectors
   
+  
 def combination(List):
     result = []
     for l in range(1, len(List)+1):
@@ -56,7 +58,7 @@ def combination(List):
                 result.append(list(i))
     return result
 
-
+  
 def sum_vectors(vectors):
     result = []
     for i in range(len(vectors[0])):
