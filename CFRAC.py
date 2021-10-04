@@ -38,7 +38,7 @@ def update_factor_base(base, n, num, vectors):
     base_new = base.copy()
     factorize = factorization_small_n(num)
     for f in set(factorize):
-        if f not in base_new and f < 100:
+        if f not in base_new and f < 50:
             if (n%f)**int(((f-1)/2))%f == 1:
                     base_new.append(f)
     base_new = sorted(base_new)
