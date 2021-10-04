@@ -13,6 +13,8 @@ import itertools
 TABLE = pd.DataFrame({'S': ['a', 'bmodn', 'b^2modn'], 
                       '-1' : ['-', 1, 0]}).set_index('S')
 
+pd.set_option('display.max_columns', 30)
+
 def factorization_small_n(n):
     numbers = []
     if n < 0:
@@ -42,12 +44,15 @@ def update_factor_base(base, n, num, vectors):
         if f not in base_new and f < 100:
             if (n%f)**int(((f-1)/2))%f == 1:
                     base_new.append(f)
-    if base_new != base:
-        for i in range(len(vectors)):
-            factorize_i = factorization_small_n(TABLE[f'{i}'][2])
-            vectors[i] = [factorize_i.count(k) for k in base_new]
-    vectors.append([factorize.count(i) for i in base_new])
-    return sorted(base_new), vectors
+    base_new = sorted(base_new)
+    for i in range(len(vectors)):
+        factorize_i = factorization_small_n(TABLE[f'{i}'][2])
+        vectors[i] = [factorize_i.count(k) for k in base_new]
+    if np.in1d(factorize, base_new).all() == True:
+        vectors.append([factorize.count(j) for j in base_new])
+    else:
+        vectors.append(None)
+    return base_new, vectors
   
   
 def combination(List):
@@ -55,7 +60,8 @@ def combination(List):
     for l in range(1, len(List)+1):
         for i in itertools.combinations(List, l):
             if List[-1] in i:
-                result.append(list(i))
+                if None not in i:
+                    result.append(list(i))
     return result
 
   
@@ -87,9 +93,9 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
             if sum_vectors(comb) == (len(Beta))*[0]:
                 X, Y = 1, 1   
                 for vec in comb[:-1]:
-                    X *= TABLE[f'{w.index(vec)}'][1]%n
-                    Y *= TABLE[f'{w.index(vec)}'][2]
-                X *= TABLE[f'{it}'][1]%n
+                    X = float(X*TABLE[f'{w.index(vec)}'][1]%n)
+                    Y = float(Y*TABLE[f'{w.index(vec)}'][2])
+                X = X*TABLE[f'{it}'][1]%n
                 Y = np.sqrt(Y*TABLE[f'{it}'][2])
                 d1 = np.gcd(int(X + Y), n)
                     if 1 < d1 < n:
