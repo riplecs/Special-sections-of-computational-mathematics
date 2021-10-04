@@ -10,9 +10,6 @@ import pandas as pd
 import itertools
 
 
-TABLE = pd.DataFrame({'S': ['a', 'bmodn', 'b^2modn'], 
-                      '-1' : ['-', 1, 0]}).set_index('S')
-
 pd.set_option('display.max_columns', 30)
 
 def factorization_small_n(n):
@@ -73,6 +70,8 @@ def sum_vectors(vectors):
   
   
 def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
+    TABLE = pd.DataFrame({'S': ['a', 'bmodn', 'b^2modn'], 
+                         '-1' : ['-', 1, 0]}).set_index('S')
     alpha = np.sqrt(n)
     a = int(alpha)
     u = a
