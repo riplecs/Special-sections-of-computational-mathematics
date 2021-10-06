@@ -8,7 +8,9 @@ Created on Fri Oct  1 17:51:36 2021
 import numpy as np
 import pandas as pd
 import itertools
-
+import random
+import time
+import math
 
 pd.set_option('display.max_columns', 30)
 
@@ -34,17 +36,18 @@ def counting_b2(m, n):
         return mod - n
     
     
-def update_factor_base(base, n, num, vectors):
+def update_factor_base(base, n, num, vectors, table, limit):
     base_new = base.copy()
     factorize = factorization_small_n(num)
     for f in set(factorize):
-        if f not in base_new and f < 50:
-            if (n%f)**int(((f-1)/2))%f == 1:
+        if f not in base_new and f < limit:
+            if (n%f)**int(((f - 1)/2))%f == 1:
                     base_new.append(f)
     base_new = sorted(base_new)
-    for i in range(len(vectors)):
-        factorize_i = factorization_small_n(TABLE[f'{i}'][2])
-        vectors[i] = [factorize_i.count(k) for k in base_new]
+    if len(base_new) != len(base):
+        for i in range(len(vectors)):
+            factorize_i = factorization_small_n(table[f'{i}'][2])
+            vectors[i] = [factorize_i.count(k) for k in base_new]
     if np.in1d(factorize, base_new).all() == True:
         vectors.append([factorize.count(j) for j in base_new])
     else:
@@ -69,7 +72,8 @@ def sum_vectors(vectors):
     return result
   
   
-def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
+def CFRAC_Brillhart_Morrison(n, lim, v = 1, Beta = [-1, 2], d = 0):
+    start_time = time.time()
     TABLE = pd.DataFrame({'S': ['a', 'bmodn', 'b^2modn'], 
                          '-1' : ['-', 1, 0]}).set_index('S')
     alpha = np.sqrt(n)
@@ -80,6 +84,9 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
     Beta, w = update_factor_base(Beta, n, b, [])
     it = 1
     while True:
+        if int(time.time() - start_time) > 10:
+            return 0
+            break
         v1 = (n - u**2)/v
         alpha1 = (alpha + u)/v1
         a1 = int(alpha1)
@@ -87,7 +94,7 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
         b = (a1*TABLE[f'{it-1}'][1] + TABLE[f'{it-2}'][1])%n
         b2= counting_b2(b, n)
         TABLE[f'{it}'] = [a1, b, b2]
-        Beta, w = update_factor_base(Beta, n, b2, w)
+        Beta, w = update_factor_base(Beta, n, b2, w, TABLE, lim)
         for comb in combination(w):
             if sum_vectors(comb) == (len(Beta))*[0]:
                 X, Y = 1, 1   
@@ -97,14 +104,14 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
                 X = X*TABLE[f'{it}'][1]%n
                 Y = np.sqrt(Y*TABLE[f'{it}'][2])
                 d1 = np.gcd(int(X + Y), n)
-                    if 1 < d1 < n:
-                        d = d1
+                if 1 < d1 < n:
+                    d = d1
+                    break
+                else:
+                    d2 = np.gcd(int(X - Y), n)
+                    if 1 < d2 < n:
+                        d = d2
                         break
-                    else:
-                        d2 = np.gcd(int(X - Y), n)
-                        if 1 < d2 < n:
-                            d = d2
-                            break
         if d == 0:
             it+=1
             u = u1
@@ -113,13 +120,21 @@ def CFRAC_Brillhart_Morrison(n, v = 1, Beta = [-1, 2], d = 0):
             continue
         else:
             print(TABLE)
+            print('\nФактор-база: ', Beta)
             for vec in comb[:-1]:
                 print(f'\nν_{w.index(vec)} = {w[w.index(vec)]}')
             print(f'\nν_{it} = {w[it]}')
-            print('\nФактор-база: ', Beta)
             return d
             break
     
     
-print('\nd = ', CFRAC_Brillhart_Morrison(25511))
+def factorization(n, lim = 50):
+    result = CFRAC_Brillhart_Morrison(n, lim)
+    while result == 0:
+        lim += 50
+        result = CFRAC_Brillhart_Morrison(n, lim)
+    return result    
+
+
+print('\nd = ', factorization(21299881))
 
