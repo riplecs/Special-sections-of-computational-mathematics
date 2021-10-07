@@ -8,10 +8,11 @@ Created on Fri Oct  1 17:51:36 2021
 import numpy as np
 import pandas as pd
 import itertools
-import time
 import math
 
+
 pd.set_option('display.max_columns', 30)
+
 
 def factorization_small_n(n):
     numbers = []
@@ -58,8 +59,7 @@ def combination(List):
     result = []
     for l in range(1, len(List)+1):
         for i in itertools.combinations(List, l):
-            if List[-1] in i:
-                if None not in i:
+            if List[-1] in comb and None not in comb:
                     result.append(list(i))
     return result
 
@@ -72,20 +72,16 @@ def sum_vectors(vectors):
   
   
 def CFRAC_Brillhart_Morrison(n, lim, v = 1, Beta = [-1, 2], d = 0):
-    start_time = time.time()
     TABLE = pd.DataFrame({'S': ['a', 'bmodn', 'b^2modn'], 
                          '-1' : ['-', 1, 0]}).set_index('S')
-    alpha = np.sqrt(n)
+    alpha = math.sqrt(n)
     a = int(alpha)
     u = a
     b = counting_b2(a, n)
     TABLE['0'] = [a, a, b]
-    Beta, w = update_factor_base(Beta, n, b, [])
+    Beta, w = update_factor_base(Beta, n, b, [], TABLE, lim)
     it = 1
     while True:
-        if int(time.time() - start_time) > 10:
-            return 0
-            break
         v1 = (n - u**2)/v
         alpha1 = (alpha + u)/v1
         a1 = int(alpha1)
@@ -101,7 +97,7 @@ def CFRAC_Brillhart_Morrison(n, lim, v = 1, Beta = [-1, 2], d = 0):
                     X = float(X*TABLE[f'{w.index(vec)}'][1]%n)
                     Y = float(Y*TABLE[f'{w.index(vec)}'][2])
                 X = X*TABLE[f'{it}'][1]%n
-                Y = np.sqrt(Y*TABLE[f'{it}'][2])
+                Y = math.sqrt(Y*TABLE[f'{it}'][2])
                 d1 = np.gcd(int(X + Y), n)
                 if 1 < d1 < n:
                     d = d1
@@ -113,6 +109,9 @@ def CFRAC_Brillhart_Morrison(n, lim, v = 1, Beta = [-1, 2], d = 0):
                         break
         if d == 0:
             it+=1
+            if it > 21:
+                return 0
+                break
             u = u1
             v = v1
             a = a1
