@@ -111,7 +111,6 @@ def CFRAC_Brillhart_Morrison(n, lim, v = 1, Beta = [-1, 2], d = 0):
             it+=1
             if it > 21:
                 return 0
-                break
             u = u1
             v = v1
             a = a1
@@ -123,7 +122,6 @@ def CFRAC_Brillhart_Morrison(n, lim, v = 1, Beta = [-1, 2], d = 0):
                 print(f'\nν_{w.index(vec)} = {w[w.index(vec)]}')
             print(f'\nν_{it} = {w[it]}')
             return d
-            break
     
     
 def factorization(n, lim = 50):
