@@ -114,7 +114,6 @@ def CFRAC_Brillhart_Morrison(n, lim, v = 1, Beta = [-1, 2], d = 0):
             u = u1
             v = v1
             a = a1
-            continue
         else:
             print(TABLE)
             print('\nФактор-база: ', Beta)
