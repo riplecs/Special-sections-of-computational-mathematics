@@ -48,7 +48,7 @@ def update_factor_base(base, n, num, vectors, table, limit):
         for i in range(len(vectors)):
             factorize_i = factorization_small_n(table[f'{i}'][2])
             vectors[i] = [factorize_i.count(k) for k in base_new]
-    if np.in1d(factorize, base_new).all() == True:
+    if np.in1d(factorize, base_new).all():
         vectors.append([factorize.count(j) for j in base_new])
     else:
         vectors.append(None)
