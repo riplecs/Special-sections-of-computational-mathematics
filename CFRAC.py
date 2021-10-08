@@ -32,8 +32,7 @@ def counting_b2(m, n):
     mod = (m**2)%n
     if mod < n/2:
         return mod
-    else:
-        return mod - n
+    return mod - n
     
     
 def update_factor_base(base, n, num, vectors, table, limit):
