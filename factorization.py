@@ -22,7 +22,7 @@ def classicPollard(x0, n, func):
                 print(f'Відповідь: d = {gcd}')
                 triger = True
                 break
-        if triger == True:
+        if triger:
             break
         
         
@@ -61,7 +61,7 @@ def twoKmodification(x0, n, func):
                     print(f'Відповідь: d = {gcd}')
                     triger = True
                     break
-        if triger == True:
+        if triger:
             break
         
         
