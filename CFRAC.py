@@ -72,7 +72,7 @@ def sum_vectors(vectors):
   
 def CFRAC_Brillhart_Morrison(n, lim, v = 1, Beta = [-1, 2], d = 0):
     TABLE = pd.DataFrame({'S': ['a', 'bmodn', 'b^2modn'], 
-                         '-1' : ['-', 1, 0]}).set_index('S')
+                         '-1' : ['-', 1, 1]}).set_index('S')
     alpha = math.sqrt(n)
     a = int(alpha)
     u = a
