@@ -13,7 +13,7 @@ import gmpy2
 import math 
 
 
-PRIMES = [2, 3, 5, 7, 11, 13, 17, 23, 29, 31, 37, 41, 43]
+PRIMES = [2, 3, 5, 7, 11, 13, 17, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
 
 
 def q(x, m, n):
@@ -74,7 +74,7 @@ def congruence(m, n, p):
     inv2 = gmpy2.invert(2, p)
     inv4 = gmpy2.invert(4, p)
     x1, x2 = square_modulo_root(inv4*b**2 - c, p)
-    return x1 - inv2*b, x2 - inv2*b
+    return (x1 - inv2*b)%p, (x2 - inv2*b)%p
     
 
 def find_x(sign, mas, x, p, lim):
@@ -93,6 +93,8 @@ def eratosthenes(n, lim):
     for num in PRIMES[1:]:
         if gmpy2.legendre(n, num) == 1:
             Beta.append(num)
+            if len(Beta) == lim - 1:
+                break
     m = int(math.sqrt(n))
     df = pd.DataFrame({'x': interval, 'x + m': [x + m for x in interval],
                        'b': [q(x, m, n) for x in interval]})
@@ -142,10 +144,10 @@ def eratosthenes(n, lim):
             
 
 def factorization(n, lim = 5):
-    print('____________N = ', n, '____________')
+    print('\n____________N = ', n, '____________\n')
     d = eratosthenes(n, lim)
     while d == 0:
-        lim  = lim**2
+        lim  += 5
         d = eratosthenes(n, lim)
     print(d[1])
     return d[0]
