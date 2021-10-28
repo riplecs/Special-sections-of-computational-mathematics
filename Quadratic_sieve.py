@@ -114,9 +114,9 @@ def eratosthenes(n, lim, Beta = [-1, 2]):
         for p in Beta[1:]:
             ans -= math.log(p, 10)*df[f'lg{p}'][i]
         diff.append(ans)
-    df['Q(x)'] = diff
-    potential_Beta_numbers = df['b'][df['Q(x)'] < 
-                                     np.mean(df['Q(x)'])].values.tolist()
+    df['lgb - lgp_i'] = diff
+    potential_Beta_numbers = df['b'][df['lgb - lgp_i'] < 
+                             np.mean(df['lgb - lgp_i'])].values.tolist()
     vectors, Beta_numbers  = [], []
     for num in potential_Beta_numbers:
         factorization = factorization_small_n(num)
