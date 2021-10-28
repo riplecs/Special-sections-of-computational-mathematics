@@ -63,7 +63,9 @@ def congruence(m, n, p):
     c = (m**2 - n)%p
     if b == c == 0:
         return 0, 0
-    if b == 0 and abs(c) == 1 and p == 2:
+    if b == 0 and с == -1:
+        return 1, -1
+    if b == 0 and abs(c) == 1 and p==2:
         return 1, -1
     if b == 0:
         return square_modulo_root(-c, p)
