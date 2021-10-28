@@ -75,11 +75,23 @@ def congruence(m, n, p):
     return x1 - inv2*b, x2 - inv2*b
     
 
-    
+def find_x(sign, mas, x, p, lim):
+    while abs(x) <= lim:
+        if x not in mas:
+            mas.append(x)
+        if sign == '+':
+            x += p
+        else:
+            x -= p
+    return mas
+
+
 def eratosthenes(n, lim, Beta = [-1, 2]):
     for num in PRIMES[1:]:
         if gmpy2.legendre(n, num) == 1:
             Beta.append(num)
+            if len(Beta) == lim + 1:
+                break
     m = int(math.sqrt(n))
     df = pd.DataFrame({'x': -lim, 'x + m': 0, 'b': q(-lim, m, n)}, index = [0])
     for x in range(-lim + 1, lim + 1):
@@ -88,10 +100,9 @@ def eratosthenes(n, lim, Beta = [-1, 2]):
     df['lgb'] = [math.log(abs(b), 10) for b in df['b']]
     for p in Beta[1:]:
         X = []
-        x1, x2 = congruence(m, n, p)
-        for x in range(-lim, lim + 1):
-            if x%p == abs(x1) or x%p == abs(x2):
-                X.append(x)
+        for x in congruence(m, n, p):
+            X = find_x('+', X, x, p, lim)
+            X = find_x('-', X, x, p, lim)
         if X == []:
             Beta.remove(p)
         else:
