@@ -93,13 +93,9 @@ def eratosthenes(n, lim):
     for num in PRIMES[1:]:
         if gmpy2.legendre(n, num) == 1:
             Beta.append(num)
-            if len(Beta) == lim + 1:
-                break
     m = int(math.sqrt(n))
-    df = pd.DataFrame({'x': -lim, 'x + m': 0, 'b': q(-lim, m, n)}, index = [0])
-    for x in range(-lim + 1, lim + 1):
-        df = df.append({'x': x, 'x + m': x + m, 'b': q(x, m, n)}, 
-                       ignore_index = True)
+    df = pd.DataFrame({'x': interval, 'x + m': [x + m for x in interval],
+                       'b': [q(x, m, n) for x in interval]})
     df['lgb'] = [math.log(abs(b), 10) for b in df['b']]
     for p in Beta[1:]:
         X = []
@@ -110,9 +106,9 @@ def eratosthenes(n, lim):
             Beta.remove(p)
         else:
             df[f'lg{p}'] = [(1 if df['x'][i] in X else 0) 
-                            for i in range(len(df))]
+                            for i in range(len(interval))]
     diff = []
-    for i in range(len(df)):
+    for i in range(len(interval)):
         ans = df['lgb'][i]
         for p in Beta[1:]:
             ans -= math.log(p, 10)*df[f'lg{p}'][i]
@@ -146,6 +142,7 @@ def eratosthenes(n, lim):
             
 
 def factorization(n, lim = 5):
+    print('____________N = ', n, '____________')
     d = eratosthenes(n, lim)
     while d == 0:
         lim  = lim**2
