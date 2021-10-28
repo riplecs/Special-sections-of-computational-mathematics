@@ -86,7 +86,8 @@ def find_x(sign, mas, x, p, lim):
     return mas
 
 
-def eratosthenes(n, lim, Beta = [-1, 2]):
+def eratosthenes(n, lim):
+    Beta = [-1, 2]
     for num in PRIMES[1:]:
         if gmpy2.legendre(n, num) == 1:
             Beta.append(num)
