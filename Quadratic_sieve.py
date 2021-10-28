@@ -98,7 +98,7 @@ def eratosthenes(n, lim):
     m = int(math.sqrt(n))
     df = pd.DataFrame({'x': interval, 'x + m': [x + m for x in interval],
                        'b': [q(x, m, n) for x in interval]})
-    df['lgb'] = [math.log(abs(b), 10) for b in df['b']]
+    df['lg|b|'] = [math.log(abs(b), 10) for b in df['b']]
     for p in Beta[1:]:
         X = []
         for x in congruence(m, n, p):
@@ -115,9 +115,9 @@ def eratosthenes(n, lim):
         for p in Beta[1:]:
             ans -= math.log(p, 10)*df[f'lg{p}'][i]
         diff.append(ans)
-    df['lgb - lgp_i'] = diff
-    potential_Beta_numbers = df['b'][df['lgb - lgp_i'] < 
-                             np.mean(df['lgb - lgp_i'])].values.tolist()
+    df['lg|b| - lgp'] = diff
+    potential_Beta_numbers = df['b'][df['lg|b| - lgp'] < 
+                             np.mean(df['lg|b| - lgp'])].values.tolist()
     vectors, Beta_numbers  = [], []
     for num in potential_Beta_numbers:
         factorization = factorization_small_n(num)
@@ -155,3 +155,6 @@ def factorization(n, lim = 5):
 
 print('\nd = ', factorization(91))
 print('\nd = ', factorization(8931721))
+print('\nd = ', factorization(15347))
+print('\nd = ', factorization(1649))
+print('\nd = ', factorization(25511))
