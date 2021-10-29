@@ -109,6 +109,9 @@ def eratosthenes(n, lim):
         else:
             df[f'lg{p}'] = [(1 if df['x'][i] in X else 0) 
                             for i in range(len(interval))]
+            if sum(df[f'lg{p}'].values) == 1:
+                del df[f'lg{p}']
+                Beta.remove(p)
     diff = []
     for i in range(len(interval)):
         ans = df['lgb'][i]
