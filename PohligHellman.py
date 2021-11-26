@@ -9,6 +9,15 @@ from CFRAC import factorization_small_n
 import numpy as np
 import gmpy2
 
+def oiler(n):
+    if gmpy2.is_prime(n):
+        return n - 1
+    count = 0
+    for i in range(1, n):
+        if gmpy2.gcd(i, n) == 1:
+            count += 1
+    return count
+
 
 def CRT(congruences):
     M = np.prod([cong[1] for cong in congruences])
@@ -18,8 +27,9 @@ def CRT(congruences):
     return sum(M_i[i]*invM_i[i]*congruences[i][0] for i in range(len(M_i)))%M
 
 
-def PohligHellman(alpha, beta, n):
-    order = n - 1
+def PohligHellman(alpha, beta, n, order = None):
+    if order is None:
+        order = oiler(n)
     factor_ord = factorization_small_n(order)
     p =list(set(factor_ord))
     l = [factor_ord.count(i) for i in p]
@@ -38,6 +48,6 @@ def PohligHellman(alpha, beta, n):
     return CRT(congruences)
 
 
-print('x = ', PohligHellman(2, 28, 37))
 print('x = ', PohligHellman(5, 11, 97))
-print('x = ', PohligHellman(17, 587, 1009))
+print('x = ', PohligHellman(3, 148, 181))
+print('x = ', PohligHellman(9704, 13896, 17389, 1242))
