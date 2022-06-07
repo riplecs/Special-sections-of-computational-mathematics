@@ -1,5 +1,5 @@
 
-# Algorithms of factorisation:
+### Algorithms of factorisation:
 - Pollard + two modifications of Pollard + Ferma
 - Quadratic sieve
 - Pohlig–Hellman algorithm
