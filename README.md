@@ -20,7 +20,7 @@ Modular arithmetic was implemented on the basis of Barrett's reduction, exaltati
 
 ## LABA2 : Implementation of operations in finite fields of characteristic 2
 
-I implemented a Galois field of characteristic 2 of degree m in the polynomial and normal basises:
+Was implemented a Galois field of characteristic 2 of degree m in the polynomial and normal basises:
 1. adding elements;
 2. multiplication of elements;
 3. calculation of the trace element;
