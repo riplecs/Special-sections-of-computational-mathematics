@@ -2,12 +2,12 @@
 
 The following operations were implemented:
 
-1. adding numbers;
-2. subtraction of numbers;
-3. multiplication of numbers, raising numbers to the square;
-4. division of numbers, finding the remainder of the division;
-5. raising the number to a multi-digit degree;
-6. conversion (translation) of a number into a character string and inverse conversion character string in number;
+- adding numbers;
+- subtraction of numbers;
+- multiplication of numbers, raising numbers to the square;
+- division of numbers, finding the remainder of the division;
+- raising the number to a multi-digit degree;
+- conversion (translation) of a number into a character string and inverse conversion character string in number;
 
 There also were released: 
 1. calculation of GCD and LCM of two numbers;
